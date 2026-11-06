@@ -91,11 +91,16 @@ function googleUrl(pub) {
   return `https://www.google.com/maps/search/?api=1&query=${query}`;
 }
 
-function directionsUrl(pub) {
-  if (pub.lat == null) return googleUrl(pub);
-  const ios = /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
-  if (ios) return `https://maps.apple.com/?daddr=${pub.lat},${pub.lng}&dirflg=w`;
-  return `https://www.google.com/maps/dir/?api=1&destination=${pub.lat},${pub.lng}&travelmode=walking`;
+function navigateUrl(pub) {
+  const destination = pub.lat != null
+    ? `${pub.lat},${pub.lng}`
+    : (pub.address || pub.googleQuery || `${pub.name}, Copenhagen`);
+  const params = new URLSearchParams({
+    api: "1",
+    destination,
+    travelmode: "walking",
+  });
+  return `https://www.google.com/maps/dir/?${params.toString()}`;
 }
 
 function distanceOf(pub) {
@@ -330,12 +335,13 @@ function renderCard() {
   }
   const actions = document.createElement("div");
   actions.className = "card-actions";
-  const directions = document.createElement("a");
-  directions.className = "primary";
-  directions.href = directionsUrl(pub);
-  directions.target = "_blank";
-  directions.rel = "noopener";
-  directions.textContent = "Directions";
+  const navigate = document.createElement("a");
+  navigate.className = "primary";
+  navigate.href = navigateUrl(pub);
+  navigate.target = "_blank";
+  navigate.rel = "noopener";
+  navigate.textContent = "Navigate";
+  navigate.setAttribute("aria-label", `Navigate to ${pub.name} in Google Maps`);
   const rating = document.createElement("a");
   rating.href = googleUrl(pub);
   rating.target = "_blank";
@@ -345,7 +351,7 @@ function renderCard() {
   save.type = "button";
   save.textContent = state.picks.has(pub.id) ? "Saved" : "Save";
   save.addEventListener("click", () => togglePick(pub.id));
-  actions.append(directions, rating, save);
+  actions.append(navigate, rating, save);
   card.append(actions);
   if (pub.note || isWeak(pub)) {
     const note = document.createElement("p");

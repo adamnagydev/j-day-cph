@@ -1,4 +1,4 @@
-const VERSION = "jday-4";
+const VERSION = "jday-5";
 const SHELL = [
   "./",
   "./index.html",
