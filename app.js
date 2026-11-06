@@ -91,6 +91,10 @@ function googleUrl(pub) {
   return `https://www.google.com/maps/search/?api=1&query=${query}`;
 }
 
+function isSpecial(pub) {
+  return Boolean(pub && pub.special);
+}
+
 function navigateUrl(pub) {
   const destination = pub.lat != null
     ? `${pub.lat},${pub.lng}`
@@ -101,6 +105,18 @@ function navigateUrl(pub) {
     travelmode: "walking",
   });
   return `https://www.google.com/maps/dir/?${params.toString()}`;
+}
+
+function createNavigateLink(pub, className = "primary") {
+  const navigate = document.createElement("a");
+  navigate.className = className;
+  navigate.href = navigateUrl(pub);
+  navigate.target = "_blank";
+  navigate.rel = "noopener";
+  navigate.textContent = "Navigate";
+  navigate.setAttribute("aria-label", `Navigate to ${pub.name} in Google Maps`);
+  navigate.addEventListener("click", (event) => event.stopPropagation());
+  return navigate;
 }
 
 function distanceOf(pub) {
@@ -122,7 +138,7 @@ function filtered() {
   const q = state.query.trim().toLowerCase();
   let rows = state.pubs.filter((pub) => {
     if (state.area === "saved" && !state.picks.has(pub.id)) return false;
-    if (state.area === "special" && !pub.special) return false;
+    if (state.area === "special" && !isSpecial(pub)) return false;
     if (state.area !== "all" && state.area !== "saved" && state.area !== "special" && pub.area !== state.area) return false;
     if (!q) return true;
     const hay = `${pub.name} ${pub.areaLabel} ${pub.areaShort} ${pub.address || ""} ${pub.specialSummary || ""}`.toLowerCase();
@@ -142,7 +158,7 @@ function filtered() {
 function iconFor(pub) {
   const active = pub.id === state.selected ? " is-active" : "";
   const saved = state.picks.has(pub.id) ? " is-saved" : "";
-  const special = pub.special ? " is-special" : "";
+  const special = isSpecial(pub) ? " is-special" : "";
   return L.divIcon({
     className: "pin-wrap",
     html: `<span class="pin area-${pub.area}${active}${saved}${special}"></span>`,
@@ -172,7 +188,7 @@ function renderChips() {
   const chips = $("chips");
   chips.replaceChildren();
   const counts = new Map(AREAS.map(([id]) => [id, state.pubs.filter((p) => p.area === id).length]));
-  const specialCount = state.pubs.filter((p) => p.special).length;
+  const specialCount = state.pubs.filter((p) => isSpecial(p)).length;
   const items = [
     ["all", "All", state.pubs.length],
     ["special", "Special", specialCount],
@@ -249,11 +265,11 @@ function renderList(rows) {
     const meta = document.createElement("span");
     meta.className = "meta";
     const bits = [pub.areaShort];
-    if (pub.special) bits.push("special");
+    if (isSpecial(pub)) bits.push("special");
     if (pub.lat == null) bits.push("no pin");
     else if (isWeak(pub)) bits.push("check the pin");
     meta.textContent = bits.join(" · ");
-    if (pub.special) {
+    if (isSpecial(pub)) {
       const badge = document.createElement("span");
       badge.className = "special-badge";
       badge.textContent = "Special";
@@ -264,6 +280,7 @@ function renderList(rows) {
     dist.className = "dist";
     const meters = distanceOf(pub);
     dist.textContent = meters == null ? "" : formatDistance(meters);
+    const navigate = createNavigateLink(pub, "row-nav");
     const star = document.createElement("button");
     star.type = "button";
     star.className = "star" + (state.picks.has(pub.id) ? " is-on" : "");
@@ -275,7 +292,7 @@ function renderList(rows) {
     });
     button.append(swatch, text, dist);
     button.addEventListener("click", () => select(pub.id));
-    item.append(button, star);
+    item.append(button, navigate, star);
     list.append(item);
   }
 }
@@ -302,7 +319,7 @@ function renderCard() {
     addr.textContent = pub.address;
     card.append(addr);
   }
-  if (pub.special && pub.specialSummary) {
+  if (isSpecial(pub) && pub.specialSummary) {
     const promo = document.createElement("p");
     promo.className = "special-blurb";
     promo.textContent = pub.specialSummary;
@@ -335,13 +352,7 @@ function renderCard() {
   }
   const actions = document.createElement("div");
   actions.className = "card-actions";
-  const navigate = document.createElement("a");
-  navigate.className = "primary";
-  navigate.href = navigateUrl(pub);
-  navigate.target = "_blank";
-  navigate.rel = "noopener";
-  navigate.textContent = "Navigate";
-  navigate.setAttribute("aria-label", `Navigate to ${pub.name} in Google Maps`);
+  const navigate = createNavigateLink(pub, "primary");
   const rating = document.createElement("a");
   rating.href = googleUrl(pub);
   rating.target = "_blank";
@@ -548,12 +559,12 @@ async function main() {
   $("q").value = state.query;
   setupMap();
   const [pubsRes, metroRes] = await Promise.all([
-    fetch("./data/pubs.json"),
-    fetch("./data/metro.json"),
+    fetch("./data/pubs.json?v=6"),
+    fetch("./data/metro.json?v=6"),
   ]);
   const data = await pubsRes.json();
   const metroData = await metroRes.json();
-  state.pubs = data.pubs;
+  state.pubs = Array.isArray(data.pubs) ? data.pubs : [];
   state.metro = metroData.stations || [];
   if (state.selected && !state.pubs.some((pub) => pub.id === state.selected)) state.selected = null;
   syncMetro();
