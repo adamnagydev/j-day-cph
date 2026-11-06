@@ -278,9 +278,106 @@ aside {
   box-shadow: 0 0 0 2px #14110e, 0 1px 4px rgba(0, 0, 0, 0.55);
 }
 .pin.is-saved { box-shadow: 0 0 0 2px var(--gold), 0 0 0 4px #14110e; }
+.pin.is-special { box-shadow: 0 0 0 2px #f4efe4, 0 0 0 4px rgba(226, 177, 90, 0.85); }
 .pin.is-active {
   transform: scale(1.45);
   box-shadow: 0 0 0 2px #14110e, 0 0 0 5px var(--pin, var(--red));
+}
+.special-badge {
+  display: inline-block;
+  margin-left: 6px;
+  padding: 1px 7px;
+  border-radius: 999px;
+  background: rgba(226, 177, 90, 0.2);
+  border: 1px solid rgba(226, 177, 90, 0.55);
+  color: var(--gold);
+  font-size: 11px;
+  font-weight: 680;
+  letter-spacing: 0.02em;
+  vertical-align: 2px;
+}
+.chips .special-dot { background: var(--gold); }
+.special-blurb {
+  margin: 10px 0 0;
+  color: var(--cream);
+  font-size: 14px;
+  line-height: 1.4;
+}
+.special-source {
+  display: inline-block;
+  margin-top: 6px;
+  color: var(--gold);
+  font-size: 13px;
+}
+.metro-near {
+  margin: 8px 0 0;
+  color: #9ec5ff;
+  font-size: 13px;
+  font-variant-numeric: tabular-nums;
+}
+.metro-wrap {
+  background: transparent !important;
+  border: 0 !important;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+.metro-mark {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 20px;
+  height: 20px;
+  border-radius: 5px;
+  background: #dfe7f2;
+  color: #152033;
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  box-shadow: 0 0 0 2px #14110e, 0 1px 4px rgba(0, 0, 0, 0.45);
+}
+.metro-label {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  max-width: 120px;
+  padding: 3px 6px;
+  border-radius: 8px;
+  background: rgba(20, 17, 14, 0.82);
+  border: 1px solid rgba(223, 231, 242, 0.28);
+  backdrop-filter: blur(4px);
+}
+.metro-name {
+  color: #eef3fa;
+  font-size: 11px;
+  font-weight: 650;
+  line-height: 1.1;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.metro-lines { display: flex; gap: 3px; flex-wrap: wrap; }
+.metro-lines.compact { margin-left: 2px; }
+.metro-line {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 18px;
+  height: 14px;
+  padding: 0 4px;
+  border-radius: 4px;
+  background: var(--line, #9aa3ad);
+  color: #10141c;
+  font-size: 9px;
+  font-weight: 800;
+  line-height: 1;
+}
+.metro-tip {
+  background: #1e1a16 !important;
+  color: #f4efe4 !important;
+  border: 1px solid rgba(244, 239, 228, 0.18) !important;
+  border-radius: 8px !important;
+  box-shadow: none !important;
 }
 .area-k { --pin: #e15a45; }
 .area-v { --pin: #e2a04a; }
