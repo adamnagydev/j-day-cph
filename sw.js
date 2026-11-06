@@ -1,11 +1,15 @@
-const VERSION = "jday-5";
+const VERSION = "jday-6";
 const SHELL = [
   "./",
   "./index.html",
   "./styles.css",
+  "./styles.css?v=6",
   "./app.js",
+  "./app.js?v=6",
   "./data/pubs.json",
+  "./data/pubs.json?v=6",
   "./data/metro.json",
+  "./data/metro.json?v=6",
   "./favicon.svg",
   "./vendor/leaflet/leaflet.css",
   "./vendor/leaflet/leaflet.js",
