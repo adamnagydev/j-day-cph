@@ -12,7 +12,7 @@
   <link rel="stylesheet" href="./vendor/leaflet/leaflet.css">
   <link rel="stylesheet" href="./vendor/MarkerCluster.css">
   <link rel="stylesheet" href="./vendor/MarkerCluster.Default.css">
-  <link rel="stylesheet" href="./styles.css?v=3">
+  <link rel="stylesheet" href="./styles.css?v=5">
 </head>
 <body>
   <div class="app">
@@ -40,6 +40,7 @@
         <input id="q" type="search" placeholder="Search bars" autocomplete="off" enterkeyhint="search">
       </label>
       <button id="locate" type="button">Near me</button>
+      <button id="metro" type="button" aria-pressed="true">Metro</button>
       <button id="share" type="button">Share</button>
     </div>
 
@@ -50,7 +51,7 @@
         <div id="card" hidden></div>
         <p id="summary"></p>
         <ul id="list"></ul>
-        <p class="fine">List from <a href="https://migogkbh.dk/oel-og-nisser-paa-j-dag-i-koebenhavn/">migogkbh.dk</a>. Pins from OpenStreetMap — a door off is possible, so check Rating before you commit. Google ratings aren’t embedded; the link opens the live listing.</p>
+        <p class="fine">List from <a href="https://migogkbh.dk/oel-og-nisser-paa-j-dag-i-koebenhavn/">migogkbh.dk</a>, plus verified adds from Tuborg and venue pages. Special = free beer / deals / live music with a cited 2026 promo. Metro stops from OpenStreetMap. Pub pins can sit a door off — check Rating before you commit.</p>
       </aside>
       <div id="map" role="application" aria-label="Map of J-dag bars in Copenhagen"></div>
     </div>
@@ -58,6 +59,6 @@
   <div id="toast" role="status"></div>
   <script src="./vendor/leaflet/leaflet.js"></script>
   <script src="./vendor/leaflet.markercluster.js"></script>
-  <script src="./app.js?v=3"></script>
+  <script src="./app.js?v=5"></script>
 </body>
 </html>

@@ -11,12 +11,21 @@ const AREAS = [
 
 const state = {
   pubs: [],
+  metro: [],
   area: "all",
   query: "",
   selected: null,
   picks: new Set(),
   here: null,
   sheet: true,
+  showMetro: true,
+};
+
+const METRO_COLORS = {
+  M1: "#36a166",
+  M2: "#e2b15a",
+  M3: "#d94a3a",
+  M4: "#5b8def",
 };
 
 const $ = (id) => document.getElementById(id);
@@ -24,8 +33,10 @@ const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").match
 
 let map;
 let cluster;
+let metroLayer;
 let hereMarker;
 const markers = new Map();
+const metroMarkers = [];
 
 function loadPicks() {
   try {
@@ -80,11 +91,16 @@ function googleUrl(pub) {
   return `https://www.google.com/maps/search/?api=1&query=${query}`;
 }
 
-function directionsUrl(pub) {
-  if (pub.lat == null) return googleUrl(pub);
-  const ios = /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
-  if (ios) return `https://maps.apple.com/?daddr=${pub.lat},${pub.lng}&dirflg=w`;
-  return `https://www.google.com/maps/dir/?api=1&destination=${pub.lat},${pub.lng}&travelmode=walking`;
+function navigateUrl(pub) {
+  const destination = pub.lat != null
+    ? `${pub.lat},${pub.lng}`
+    : (pub.address || pub.googleQuery || `${pub.name}, Copenhagen`);
+  const params = new URLSearchParams({
+    api: "1",
+    destination,
+    travelmode: "walking",
+  });
+  return `https://www.google.com/maps/dir/?${params.toString()}`;
 }
 
 function distanceOf(pub) {
@@ -92,13 +108,24 @@ function distanceOf(pub) {
   return haversine(state.here.lat, state.here.lng, pub.lat, pub.lng);
 }
 
+function nearestMetro(pub) {
+  if (pub.lat == null || !state.metro.length) return null;
+  let best = null;
+  for (const station of state.metro) {
+    const meters = haversine(pub.lat, pub.lng, station.lat, station.lng);
+    if (!best || meters < best.meters) best = { station, meters };
+  }
+  return best;
+}
+
 function filtered() {
   const q = state.query.trim().toLowerCase();
   let rows = state.pubs.filter((pub) => {
     if (state.area === "saved" && !state.picks.has(pub.id)) return false;
-    if (state.area !== "all" && state.area !== "saved" && pub.area !== state.area) return false;
+    if (state.area === "special" && !pub.special) return false;
+    if (state.area !== "all" && state.area !== "saved" && state.area !== "special" && pub.area !== state.area) return false;
     if (!q) return true;
-    const hay = `${pub.name} ${pub.areaLabel} ${pub.areaShort} ${pub.address || ""}`.toLowerCase();
+    const hay = `${pub.name} ${pub.areaLabel} ${pub.areaShort} ${pub.address || ""} ${pub.specialSummary || ""}`.toLowerCase();
     return hay.includes(q);
   });
   rows.sort((a, b) => {
@@ -115,9 +142,10 @@ function filtered() {
 function iconFor(pub) {
   const active = pub.id === state.selected ? " is-active" : "";
   const saved = state.picks.has(pub.id) ? " is-saved" : "";
+  const special = pub.special ? " is-special" : "";
   return L.divIcon({
     className: "pin-wrap",
-    html: `<span class="pin area-${pub.area}${active}${saved}"></span>`,
+    html: `<span class="pin area-${pub.area}${active}${saved}${special}"></span>`,
     iconSize: [18, 18],
     iconAnchor: [9, 9],
   });
@@ -144,7 +172,13 @@ function renderChips() {
   const chips = $("chips");
   chips.replaceChildren();
   const counts = new Map(AREAS.map(([id]) => [id, state.pubs.filter((p) => p.area === id).length]));
-  const items = [["all", "All", state.pubs.length], ...AREAS.map(([id, label]) => [id, label, counts.get(id)]), ["saved", "Saved", state.picks.size]];
+  const specialCount = state.pubs.filter((p) => p.special).length;
+  const items = [
+    ["all", "All", state.pubs.length],
+    ["special", "Special", specialCount],
+    ...AREAS.map(([id, label]) => [id, label, counts.get(id)]),
+    ["saved", "Saved", state.picks.size],
+  ];
   for (const [id, label, count] of items) {
     const button = document.createElement("button");
     button.type = "button";
@@ -153,6 +187,10 @@ function renderChips() {
     if (AREAS.some(([area]) => area === id)) {
       const dot = document.createElement("span");
       dot.className = `dot area-${id}`;
+      button.append(dot);
+    } else if (id === "special") {
+      const dot = document.createElement("span");
+      dot.className = "dot special-dot";
       button.append(dot);
     }
     button.append(`${label} ${count}`);
@@ -176,6 +214,12 @@ function renderSummary(rows) {
   }
   if (state.area === "saved") {
     summary.textContent = rows.length ? `${rows.length} saved for tonight` : "No saves yet. Star the bars you actually want.";
+    return;
+  }
+  if (state.area === "special") {
+    summary.textContent = rows.length
+      ? `${rows.length} with verified free beer, deals, giveaways, or live music`
+      : "No specials matched.";
     return;
   }
   const label = AREAS.find(([id]) => id === state.area)?.[1];
@@ -205,9 +249,16 @@ function renderList(rows) {
     const meta = document.createElement("span");
     meta.className = "meta";
     const bits = [pub.areaShort];
+    if (pub.special) bits.push("special");
     if (pub.lat == null) bits.push("no pin");
     else if (isWeak(pub)) bits.push("check the pin");
     meta.textContent = bits.join(" · ");
+    if (pub.special) {
+      const badge = document.createElement("span");
+      badge.className = "special-badge";
+      badge.textContent = "Special";
+      name.append(" ", badge);
+    }
     text.append(name, document.createElement("br"), meta);
     const dist = document.createElement("span");
     dist.className = "dist";
@@ -251,6 +302,21 @@ function renderCard() {
     addr.textContent = pub.address;
     card.append(addr);
   }
+  if (pub.special && pub.specialSummary) {
+    const promo = document.createElement("p");
+    promo.className = "special-blurb";
+    promo.textContent = pub.specialSummary;
+    card.append(promo);
+    if (pub.specialSource) {
+      const src = document.createElement("a");
+      src.className = "special-source";
+      src.href = pub.specialSource;
+      src.target = "_blank";
+      src.rel = "noopener";
+      src.textContent = "Promo source";
+      card.append(src);
+    }
+  }
   const meters = distanceOf(pub);
   if (meters != null) {
     const walk = document.createElement("p");
@@ -259,14 +325,23 @@ function renderCard() {
     walk.textContent = `${formatDistance(meters)} · about ${minutes} min walk`;
     card.append(walk);
   }
+  const metro = nearestMetro(pub);
+  if (metro) {
+    const stop = document.createElement("p");
+    stop.className = "metro-near";
+    const minutes = Math.max(1, Math.round(metro.meters / 80));
+    stop.textContent = `Metro ${metro.station.name} (${metro.station.lines.join(" · ")}) · ${formatDistance(metro.meters)} / ~${minutes} min`;
+    card.append(stop);
+  }
   const actions = document.createElement("div");
   actions.className = "card-actions";
-  const directions = document.createElement("a");
-  directions.className = "primary";
-  directions.href = directionsUrl(pub);
-  directions.target = "_blank";
-  directions.rel = "noopener";
-  directions.textContent = "Directions";
+  const navigate = document.createElement("a");
+  navigate.className = "primary";
+  navigate.href = navigateUrl(pub);
+  navigate.target = "_blank";
+  navigate.rel = "noopener";
+  navigate.textContent = "Navigate";
+  navigate.setAttribute("aria-label", `Navigate to ${pub.name} in Google Maps`);
   const rating = document.createElement("a");
   rating.href = googleUrl(pub);
   rating.target = "_blank";
@@ -276,7 +351,7 @@ function renderCard() {
   save.type = "button";
   save.textContent = state.picks.has(pub.id) ? "Saved" : "Save";
   save.addEventListener("click", () => togglePick(pub.id));
-  actions.append(directions, rating, save);
+  actions.append(navigate, rating, save);
   card.append(actions);
   if (pub.note || isWeak(pub)) {
     const note = document.createElement("p");
@@ -410,6 +485,46 @@ function tick() {
   label.textContent = "julebryg since 20:59";
 }
 
+function metroIcon(station, detailed) {
+  const chips = station.lines.map((line) => {
+    const color = METRO_COLORS[line] || "#9aa3ad";
+    return `<span class="metro-line" style="--line:${color}">${line}</span>`;
+  }).join("");
+  const label = detailed
+    ? `<span class="metro-label"><span class="metro-name">${station.name}</span><span class="metro-lines">${chips}</span></span>`
+    : `<span class="metro-lines compact">${chips}</span>`;
+  return L.divIcon({
+    className: "metro-wrap",
+    html: `<span class="metro-mark" title="${station.name}">M</span>${label}`,
+    iconSize: detailed ? [120, 28] : [54, 22],
+    iconAnchor: detailed ? [14, 14] : [12, 11],
+  });
+}
+
+function syncMetro() {
+  if (!metroLayer || !map) return;
+  const detailed = map.getZoom() >= 14;
+  metroLayer.clearLayers();
+  metroMarkers.length = 0;
+  if (!state.showMetro) return;
+  for (const station of state.metro) {
+    const marker = L.marker([station.lat, station.lng], {
+      icon: metroIcon(station, detailed),
+      keyboard: false,
+      interactive: true,
+      zIndexOffset: -200,
+      title: `${station.name} · ${station.lines.join(", ")}`,
+    });
+    marker.bindTooltip(`${station.name} (${station.lines.join(", ")})`, {
+      direction: "top",
+      opacity: 0.95,
+      className: "metro-tip",
+    });
+    metroLayer.addLayer(marker);
+    metroMarkers.push(marker);
+  }
+}
+
 function setupMap() {
   map = L.map("map", { zoomControl: true, attributionControl: true }).setView([55.678, 12.569], 13);
   L.tileLayer("https://server.arcgisonline.com/ArcGIS/rest/services/Canvas/World_Dark_Gray_Base/MapServer/tile/{z}/{y}/{x}", {
@@ -424,16 +539,24 @@ function setupMap() {
     disableClusteringAtZoom: 17,
   });
   map.addLayer(cluster);
+  metroLayer = L.layerGroup().addTo(map);
+  map.on("zoomend", () => syncMetro());
 }
 
 async function main() {
   loadPicks();
   $("q").value = state.query;
   setupMap();
-  const response = await fetch("./data/pubs.json");
-  const data = await response.json();
+  const [pubsRes, metroRes] = await Promise.all([
+    fetch("./data/pubs.json"),
+    fetch("./data/metro.json"),
+  ]);
+  const data = await pubsRes.json();
+  const metroData = await metroRes.json();
   state.pubs = data.pubs;
+  state.metro = metroData.stations || [];
   if (state.selected && !state.pubs.some((pub) => pub.id === state.selected)) state.selected = null;
+  syncMetro();
   render();
   const params = new URLSearchParams(location.search);
   if (params.get("pick") && state.picks.size) fitTo(state.pubs.filter((pub) => state.picks.has(pub.id)));
@@ -446,6 +569,15 @@ async function main() {
   });
   $("locate").addEventListener("click", locate);
   $("share").addEventListener("click", sharePlan);
+  const metroBtn = $("metro");
+  if (metroBtn) {
+    metroBtn.setAttribute("aria-pressed", String(state.showMetro));
+    metroBtn.addEventListener("click", () => {
+      state.showMetro = !state.showMetro;
+      metroBtn.setAttribute("aria-pressed", String(state.showMetro));
+      syncMetro();
+    });
+  }
   document.addEventListener("keydown", (event) => {
     if (event.key === "/" && document.activeElement !== $("q")) {
       event.preventDefault();

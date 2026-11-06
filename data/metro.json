@@ -1,0 +1,411 @@
+{
+  "network": "Copenhagen Metro",
+  "source": "OpenStreetMap",
+  "sourceNote": "Station coordinates from OpenStreetMap. Line assignments from the official M1–M4 network map.",
+  "stations": [
+    {
+      "id": "aksel-moellers-have",
+      "name": "Aksel Møllers Have",
+      "lat": 55.686051,
+      "lng": 12.532947,
+      "lines": [
+        "M3"
+      ]
+    },
+    {
+      "id": "amager-strand",
+      "name": "Amager Strand",
+      "lat": 55.656135,
+      "lng": 12.631858,
+      "lines": [
+        "M2"
+      ]
+    },
+    {
+      "id": "amagerbro",
+      "name": "Amagerbro",
+      "lat": 55.663396,
+      "lng": 12.602894,
+      "lines": [
+        "M2"
+      ]
+    },
+    {
+      "id": "bella-center",
+      "name": "Bella Center",
+      "lat": 55.638073,
+      "lng": 12.582926,
+      "lines": [
+        "M1"
+      ]
+    },
+    {
+      "id": "christianshavn",
+      "name": "Christianshavn",
+      "lat": 55.672096,
+      "lng": 12.591377,
+      "lines": [
+        "M1",
+        "M2"
+      ]
+    },
+    {
+      "id": "dr-byen",
+      "name": "DR Byen",
+      "lat": 55.655768,
+      "lng": 12.589018,
+      "lines": [
+        "M1"
+      ]
+    },
+    {
+      "id": "enghave-brygge",
+      "name": "Enghave Brygge",
+      "lat": 55.654072,
+      "lng": 12.55651,
+      "lines": [
+        "M4"
+      ]
+    },
+    {
+      "id": "enghave-plads",
+      "name": "Enghave Plads",
+      "lat": 55.667227,
+      "lng": 12.546795,
+      "lines": [
+        "M3"
+      ]
+    },
+    {
+      "id": "fasanvej",
+      "name": "Fasanvej",
+      "lat": 55.681595,
+      "lng": 12.523569,
+      "lines": [
+        "M1",
+        "M2"
+      ]
+    },
+    {
+      "id": "femoeren",
+      "name": "Femøren",
+      "lat": 55.645188,
+      "lng": 12.638338,
+      "lines": [
+        "M2"
+      ]
+    },
+    {
+      "id": "flintholm",
+      "name": "Flintholm",
+      "lat": 55.685874,
+      "lng": 12.49949,
+      "lines": [
+        "M1",
+        "M2"
+      ]
+    },
+    {
+      "id": "forum",
+      "name": "Forum",
+      "lat": 55.681807,
+      "lng": 12.552541,
+      "lines": [
+        "M1",
+        "M2"
+      ]
+    },
+    {
+      "id": "frederiksberg",
+      "name": "Frederiksberg",
+      "lat": 55.68117,
+      "lng": 12.532224,
+      "lines": [
+        "M1",
+        "M2",
+        "M3"
+      ]
+    },
+    {
+      "id": "frederiksberg-allé",
+      "name": "Frederiksberg Allé",
+      "lat": 55.673508,
+      "lng": 12.540612,
+      "lines": [
+        "M3"
+      ]
+    },
+    {
+      "id": "gammel-strand",
+      "name": "Gammel Strand",
+      "lat": 55.677594,
+      "lng": 12.578928,
+      "lines": [
+        "M3",
+        "M4"
+      ]
+    },
+    {
+      "id": "havneholmen",
+      "name": "Havneholmen",
+      "lat": 55.660986,
+      "lng": 12.559314,
+      "lines": [
+        "M4"
+      ]
+    },
+    {
+      "id": "islands-brygge",
+      "name": "Islands Brygge",
+      "lat": 55.663411,
+      "lng": 12.585211,
+      "lines": [
+        "M1"
+      ]
+    },
+    {
+      "id": "kastrup",
+      "name": "Kastrup",
+      "lat": 55.635722,
+      "lng": 12.646951,
+      "lines": [
+        "M2"
+      ]
+    },
+    {
+      "id": "kongens-nytorv",
+      "name": "Kongens Nytorv",
+      "lat": 55.679634,
+      "lng": 12.585083,
+      "lines": [
+        "M1",
+        "M2",
+        "M3",
+        "M4"
+      ]
+    },
+    {
+      "id": "koebenhavn-syd",
+      "name": "København Syd",
+      "lat": 55.652989,
+      "lng": 12.515967,
+      "lines": [
+        "M4"
+      ]
+    },
+    {
+      "id": "koebenhavns-hovedbanegaard",
+      "name": "Københavns Hovedbanegård",
+      "lat": 55.6714,
+      "lng": 12.563875,
+      "lines": [
+        "M3",
+        "M4"
+      ]
+    },
+    {
+      "id": "koebenhavns-lufthavn",
+      "name": "Københavns Lufthavn",
+      "lat": 55.630911,
+      "lng": 12.649224,
+      "lines": [
+        "M2"
+      ]
+    },
+    {
+      "id": "lergravsparken",
+      "name": "Lergravsparken",
+      "lat": 55.662236,
+      "lng": 12.617047,
+      "lines": [
+        "M2"
+      ]
+    },
+    {
+      "id": "lindevang",
+      "name": "Lindevang",
+      "lat": 55.683449,
+      "lng": 12.513186,
+      "lines": [
+        "M1",
+        "M2"
+      ]
+    },
+    {
+      "id": "marmorkirken",
+      "name": "Marmorkirken",
+      "lat": 55.685126,
+      "lng": 12.589031,
+      "lines": [
+        "M3",
+        "M4"
+      ]
+    },
+    {
+      "id": "mozarts-plads",
+      "name": "Mozarts Plads",
+      "lat": 55.648971,
+      "lng": 12.534337,
+      "lines": [
+        "M4"
+      ]
+    },
+    {
+      "id": "nordhavn",
+      "name": "Nordhavn",
+      "lat": 55.707427,
+      "lng": 12.591566,
+      "lines": [
+        "M4"
+      ]
+    },
+    {
+      "id": "nuuks-plads",
+      "name": "Nuuks Plads",
+      "lat": 55.688478,
+      "lng": 12.542529,
+      "lines": [
+        "M3"
+      ]
+    },
+    {
+      "id": "noerrebro",
+      "name": "Nørrebro",
+      "lat": 55.700049,
+      "lng": 12.537971,
+      "lines": [
+        "M3"
+      ]
+    },
+    {
+      "id": "noerrebros-runddel",
+      "name": "Nørrebros Runddel",
+      "lat": 55.693528,
+      "lng": 12.548935,
+      "lines": [
+        "M3"
+      ]
+    },
+    {
+      "id": "noerreport",
+      "name": "Nørreport",
+      "lat": 55.6838,
+      "lng": 12.571241,
+      "lines": [
+        "M1",
+        "M2"
+      ]
+    },
+    {
+      "id": "orientkaj",
+      "name": "Orientkaj",
+      "lat": 55.711838,
+      "lng": 12.595178,
+      "lines": [
+        "M4"
+      ]
+    },
+    {
+      "id": "poul-henningsens-plads",
+      "name": "Poul Henningsens Plads",
+      "lat": 55.709475,
+      "lng": 12.576136,
+      "lines": [
+        "M3"
+      ]
+    },
+    {
+      "id": "raadhuspladsen",
+      "name": "Rådhuspladsen",
+      "lat": 55.676441,
+      "lng": 12.568201,
+      "lines": [
+        "M3",
+        "M4"
+      ]
+    },
+    {
+      "id": "skjolds-plads",
+      "name": "Skjolds Plads",
+      "lat": 55.703499,
+      "lng": 12.548769,
+      "lines": [
+        "M3"
+      ]
+    },
+    {
+      "id": "sluseholmen",
+      "name": "Sluseholmen",
+      "lat": 55.645828,
+      "lng": 12.544414,
+      "lines": [
+        "M4"
+      ]
+    },
+    {
+      "id": "sundby",
+      "name": "Sundby",
+      "lat": 55.645252,
+      "lng": 12.585717,
+      "lines": [
+        "M1"
+      ]
+    },
+    {
+      "id": "trianglen",
+      "name": "Trianglen",
+      "lat": 55.699251,
+      "lng": 12.575555,
+      "lines": [
+        "M3"
+      ]
+    },
+    {
+      "id": "vanloese",
+      "name": "Vanløse",
+      "lat": 55.687145,
+      "lng": 12.492501,
+      "lines": [
+        "M1",
+        "M2"
+      ]
+    },
+    {
+      "id": "vibenhus-runddel",
+      "name": "Vibenhus Runddel",
+      "lat": 55.706396,
+      "lng": 12.564776,
+      "lines": [
+        "M3"
+      ]
+    },
+    {
+      "id": "oerestad",
+      "name": "Ørestad",
+      "lat": 55.629013,
+      "lng": 12.579355,
+      "lines": [
+        "M1"
+      ]
+    },
+    {
+      "id": "oeresund",
+      "name": "Øresund",
+      "lat": 55.66144,
+      "lng": 12.628718,
+      "lines": [
+        "M2"
+      ]
+    },
+    {
+      "id": "oesterport",
+      "name": "Østerport",
+      "lat": 55.692878,
+      "lng": 12.585924,
+      "lines": [
+        "M3",
+        "M4"
+      ]
+    }
+  ]
+}

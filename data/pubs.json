@@ -3,7 +3,7 @@
   "city": "Copenhagen",
   "release": "2026-11-06T20:59:00+01:00",
   "source": "https://migogkbh.dk/oel-og-nisser-paa-j-dag-i-koebenhavn/",
-  "sourceNote": "Bar list from migogkbh.dk, 3 November 2026. Pins checked against OpenStreetMap and published addresses. A few bars had no reliable public address and are listed without a pin.",
+  "sourceNote": "Core list from migogkbh.dk (3 Nov 2026), plus verified adds from Tuborg’s 2026 outlet list and venue/event pages. Specials are only venues with a cited free-beer, deal, giveaway, or live-music promo for 2026.",
   "pubs": [
     {
       "id": "4tallet",
@@ -500,7 +500,16 @@
       "osmId": "node/9033531390",
       "inArea": true,
       "website": "",
-      "googleQuery": "Høvlen 77, Prinsessegade 77, 1422 København"
+      "googleQuery": "Høvlen 77, Prinsessegade 77, 1422 København",
+      "special": true,
+      "specialSummary": "First pour at 20:59; nisse truck 22:30–23:00 with free julebryg and blue nissehuer.",
+      "specialTags": [
+        "free-beer",
+        "nisse-truck",
+        "first-pour"
+      ],
+      "specialSource": "https://www.hoevlen77.dk/om-hoevlen/",
+      "specialYear": 2026
     },
     {
       "id": "jagtstuen",
@@ -1142,7 +1151,16 @@
       "osmId": "node/279901270",
       "inArea": true,
       "website": "https://oldirishpub.dk/",
-      "googleQuery": "Old Irish Pub Karaokebar, Vesterbro"
+      "googleQuery": "Old Irish Pub Karaokebar, Vesterbro",
+      "special": true,
+      "specialSummary": "Live music / DJ night with Tuborg julebryg from 20:59 (Old Irish Pub group).",
+      "specialTags": [
+        "live-music",
+        "dj",
+        "first-pour"
+      ],
+      "specialSource": "https://oldirishpub.dk/da/page/j-dag",
+      "specialYear": 2026
     },
     {
       "id": "oscar-bar-og-cafe",
@@ -1315,7 +1333,16 @@
       "osmId": "node/895776321",
       "inArea": true,
       "website": "https://oldirishpub.dk/",
-      "googleQuery": "The Old Irish Pub Vesterbrogade, Vesterbrogade"
+      "googleQuery": "The Old Irish Pub Vesterbrogade, Vesterbrogade",
+      "special": true,
+      "specialSummary": "Live music and DJs; Tuborg julebryg from 20:59. Book early.",
+      "specialTags": [
+        "live-music",
+        "dj",
+        "first-pour"
+      ],
+      "specialSource": "https://oldirishpub.dk/da/page/j-dag",
+      "specialYear": 2026
     },
     {
       "id": "the-scottish-pub",
@@ -2012,7 +2039,15 @@
       "osmId": "node/279143817",
       "inArea": true,
       "website": "http://bartofcafe.dk",
-      "googleQuery": "Bartof Station, Frederiksberg"
+      "googleQuery": "Bartof Station, Frederiksberg",
+      "special": true,
+      "specialSummary": "Rattlers live rock from 19:00; julebryg at 20:59 with Carlsberg nisser. Ticketed.",
+      "specialTags": [
+        "live-music",
+        "nisse-truck"
+      ],
+      "specialSource": "https://www.gogoevents.dk/blog/j-dag",
+      "specialYear": 2026
     },
     {
       "id": "cafe-bartof",
@@ -2133,7 +2168,16 @@
       "osmId": "node/279901270",
       "inArea": true,
       "website": "https://oldirishpub.dk/",
-      "googleQuery": "The Old Irish Pub Smallegade, Smallegade, Frederiksberg"
+      "googleQuery": "The Old Irish Pub Smallegade, Smallegade, Frederiksberg",
+      "special": true,
+      "specialSummary": "Live music and DJs; Tuborg julebryg from 20:59. Book early.",
+      "specialTags": [
+        "live-music",
+        "dj",
+        "first-pour"
+      ],
+      "specialSource": "https://oldirishpub.dk/da/page/j-dag",
+      "specialYear": 2026
     },
     {
       "id": "cafe-cire",
@@ -2255,6 +2299,123 @@
       "inArea": true,
       "website": "",
       "googleQuery": "Støvlen, Jyllingevej 58, 2720 Vanløse"
+    },
+    {
+      "id": "bar50",
+      "name": "BAR50",
+      "area": "v",
+      "areaLabel": "København V",
+      "areaShort": "Vesterbro",
+      "lat": 55.671057,
+      "lng": 12.57657,
+      "address": "H. C. Andersens Boulevard 50, 1553 København",
+      "source": "checked",
+      "confidence": 0.99,
+      "inArea": true,
+      "googleQuery": "BAR50 Danhostel, H. C. Andersens Boulevard 50, København",
+      "note": "Bar inside Danhostel Copenhagen City.",
+      "addedFrom": "https://www.gogoevents.dk/blog/j-dag",
+      "special": true,
+      "specialSummary": "Free julebryg for the first 60 guests at 20:59, free nissehuer, DJ Niknags from 20:00. Free entry.",
+      "specialTags": [
+        "free-beer",
+        "dj",
+        "giveaway"
+      ],
+      "specialSource": "https://www.kultunaut.dk/perl/arrmore/type-nynaut?ArrNr=20383729",
+      "specialYear": 2026
+    },
+    {
+      "id": "dorsia",
+      "name": "Dorsia",
+      "area": "k",
+      "areaLabel": "København K",
+      "areaShort": "Indre By",
+      "lat": 55.677424,
+      "lng": 12.570586,
+      "address": "Kattesundet 4, 1458 København",
+      "source": "checked",
+      "confidence": 0.99,
+      "inArea": true,
+      "googleQuery": "Dorsia, Kattesundet 4, København",
+      "addedFrom": "https://dorsia.dk/copenhagen/j-day",
+      "special": true,
+      "specialSummary": "Open bar 20–21, free Christmas beer when the snow falls at 20:59, 2-for-1 21–22, J-Day quiz, random 3-litre giveaway at 01:00. Ticketed.",
+      "specialTags": [
+        "free-beer",
+        "open-bar",
+        "giveaway",
+        "quiz"
+      ],
+      "specialSource": "https://dorsia.dk/copenhagen/j-day",
+      "specialYear": 2026
+    },
+    {
+      "id": "la-boucherie",
+      "name": "La Boucherie",
+      "area": "k",
+      "areaLabel": "København K",
+      "areaShort": "Indre By",
+      "lat": 55.677925,
+      "lng": 12.57058,
+      "address": "Vestergade 10, 1456 København",
+      "source": "checked",
+      "confidence": 0.99,
+      "inArea": true,
+      "googleQuery": "La Boucherie, Vestergade 10, København",
+      "addedFrom": "https://laboucherie.dk/en/copenhagen/j-dag",
+      "special": true,
+      "specialSummary": "Open bar with beer and drinks 19–22; Christmas brew at 20:59. Ticketed party.",
+      "specialTags": [
+        "open-bar",
+        "first-pour"
+      ],
+      "specialSource": "https://laboucherie.dk/en/copenhagen/j-dag",
+      "specialYear": 2026
+    },
+    {
+      "id": "kastrup-strandpark",
+      "name": "Kastrup Strandpark",
+      "area": "s",
+      "areaLabel": "Amager & SV",
+      "areaShort": "Amager",
+      "lat": 55.640689,
+      "lng": 12.652052,
+      "address": "Kastrup Strandpark 1, 2770 Kastrup",
+      "source": "checked",
+      "confidence": 0.99,
+      "inArea": true,
+      "googleQuery": "Restaurant Kastrup Strandpark, Kastrup Strandpark 1",
+      "note": "On Tuborg’s official 2026 list (Kastrup). Ticketed harbour party.",
+      "addedFrom": "https://tuborg.dk/tuborg-julebryg/",
+      "special": true,
+      "specialSummary": "Tuborg nisse truck visit, DJ all night, ticketed harbour party from 18:00.",
+      "specialTags": [
+        "nisse-truck",
+        "dj"
+      ],
+      "specialSource": "https://www.gogoevents.dk/blog/j-dag",
+      "specialYear": 2026
+    },
+    {
+      "id": "vi-ses-hos-berg",
+      "name": "Vi Ses Hos Berg",
+      "area": "n",
+      "areaLabel": "Nørrebro & NV",
+      "areaShort": "Nørrebro",
+      "lat": 55.704956,
+      "lng": 12.496956,
+      "address": "Brønshøj",
+      "source": "checked",
+      "confidence": 0.95,
+      "inArea": true,
+      "googleQuery": "Vi Ses Hos Berg, Brønshøj",
+      "note": "On Tuborg’s official 2026 list under Taastrup + Hvidovre + Brønshøj.",
+      "addedFrom": "https://tuborg.dk/tuborg-julebryg/"
     }
+  ],
+  "sourcesExtra": [
+    "https://tuborg.dk/tuborg-julebryg/",
+    "https://www.gogoevents.dk/blog/j-dag"
   ]
 }
